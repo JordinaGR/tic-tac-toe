@@ -1,9 +1,9 @@
 import random
 import sys
 
-sys.setrecursionlimit(25000)
+sys.setrecursionlimit(25000) # sometimes ther's a recursion error, so...
 
-board = [' ' for x in range(10)]
+board = [' ' for x in range(10)] # create the board spaces
 
 def print_board(board):
     print(board[1], ' |', board[2], ' |', board[3])
@@ -12,21 +12,22 @@ def print_board(board):
     print('--', '+', '--', '+', '--')
     print(board[7], ' |', board[8], ' |', board[9])
 
-def full_board():
+def full_board(): # check if the board is full
     if board.count(' ') > 1:
         return
     else:
         print("It's a tie")
         quit()
 
-def check_win(bo, le):
+def check_win(bo, le): #check all the options and if there's a win the game ends (bo = board, le = letter)
     if (bo[7] == le and bo[8] == le and bo[9] == le) or (bo[4] == le and bo[5] == le and bo[6] == le) or(bo[1] == le and bo[2] == le and bo[3] == le) or (bo[7] == le and bo[4] == le and bo[1] == le) or (bo[8] == le and bo[5] == le and bo[2] == le) or(bo[9] == le and bo[6] == le and bo[3] == le) or (bo[7] == le and bo[5] == le and bo[3] == le) or(bo[9] == le and bo[5] == le and bo[1] == le):
         print("Has won the ", le, "'s")
         quit()
     else:
         return
 
-def check_win2(bo, le):
+def check_win2(bo, le): # this is like the last one but with little different output. Is used for the AI function
+                        # to check if the computer or the player can win with a single move
     return (bo[7] == le and bo[8] == le and bo[9] == le) or (bo[4] == le and bo[5] == le and bo[6] == le) or(bo[1] == le and bo[2] == le and bo[3] == le) or (bo[7] == le and bo[4] == le and bo[1] == le) or (bo[8] == le and bo[5] == le and bo[2] == le) or(bo[9] == le and bo[6] == le and bo[3] == le) or (bo[7] == le and bo[5] == le and bo[3] == le) or(bo[9] == le and bo[5] == le and bo[1] == le)
 
 def player_move(move):
@@ -38,7 +39,7 @@ def player_move(move):
         print('Invalid move')
         main()
 
-def pc_move(move):
+def pc_move(move): # this is the computer move, it choses a position ramdomly
     move = random.randrange(1, 10)
     if board[move] == ' ':
         board[move] =  'o'
@@ -46,8 +47,10 @@ def pc_move(move):
     else:
         pc_move(move)
 
-def ai(move):
+def ai(move): # this is how the AI chooses its move.
     
+    # 1st check if the computer can win with a movement
+    # 2n whith the same code, check if the player can win with a move
     possibleMoves = [x for x, letter in enumerate(board) if letter == ' ' and x != 0] 
     move = 0
     for let in ['o','x']:
@@ -59,11 +62,13 @@ def ai(move):
                 board[i] = 'o'
                 return move
 
+    # 3rd check if the middle is empty, if it is chose that.
     if board[5] == ' ':
         board[5] = 'o'
         move = 5
         return move
 
+    # 4th chose a corner
     corners = [1, 3, 7, 9]
     for i in corners:
         if board[i] == ' ':
@@ -71,6 +76,7 @@ def ai(move):
             move = i
             return move
 
+    # 5th chose an edge
     edges = [2, 4, 6, 8]
     for i in edges:
         if board[i] == ' ':
@@ -78,7 +84,7 @@ def ai(move):
             move = i
             return move
             
-def main():
+def main():     # the main function for the easy verson of the game
 
     check_win(board, 'x')
     check_win(board, 'o')
@@ -93,7 +99,7 @@ def main():
 
     main()
 
-def main2():
+def main2():    # the main function for the hard version of the game
 
     check_win(board, 'x')
     check_win(board, 'o')
@@ -109,7 +115,7 @@ def main2():
     main2()
 
 
-def version():
+def version():  # chose a version of the game
     version = str(input("Vols jugar a la versió fàcil o a la difícil? (f/d)   "))
 
     if version.lower() == 'f':
