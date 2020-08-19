@@ -1,4 +1,7 @@
 import random
+import sys
+
+sys.setrecursionlimit(25000)
 
 board = [' ' for x in range(10)]
 
@@ -16,15 +19,15 @@ def full_board():
         print("It's a tie")
         quit()
 
-def check_win():
-    if (board[1] == 'x' and board[2] == 'x' and board[3] == 'x') or (board[4] == 'x' and board[5] == 'x' and board[6] == 'x') or (board[7] == 'x' and board[8] == 'x' and board[9] == 'x') or (board[1] == 'x' and board[4] == 'x' and board[7] == 'x') or (board[2] == 'x' and board[5] == 'x' and board[8] == 'x') or (board[3] == 'x' and board[6] == 'x' and board[9] == 'x') or (board[1] == 'x' and board[5] == 'x' and board[9] == 'x') or (board[3] == 'x' and board[5] == 'x' and board[7] == 'x'):
-        print('You win! congrats')
-        quit()
-    elif (board[1] == 'o' and board[2] == 'o' and board[3] == 'o') or (board[4] == 'o' and board[5] == 'o' and board[6] == 'o') or (board[7] == 'o' and board[8] == 'o' and board[9] == 'o') or (board[1] == 'o' and board[4] == 'o' and board[7] == 'o') or (board[2] == 'o' and board[5] == 'o' and board[8] == 'o') or (board[3] == 'o' and board[6] == 'o' and board[9] == 'o') or (board[1] == 'o' and board[5] == 'o' and board[9] == 'o') or (board[3] == 'o' and board[5] == 'o' and board[7] == 'o'):
-        print('The computer won')
+def check_win(bo, le):
+    if (bo[7] == le and bo[8] == le and bo[9] == le) or (bo[4] == le and bo[5] == le and bo[6] == le) or(bo[1] == le and bo[2] == le and bo[3] == le) or (bo[7] == le and bo[4] == le and bo[1] == le) or (bo[8] == le and bo[5] == le and bo[2] == le) or(bo[9] == le and bo[6] == le and bo[3] == le) or (bo[7] == le and bo[5] == le and bo[3] == le) or(bo[9] == le and bo[5] == le and bo[1] == le):
+        print("Has won the ", le, "'s")
         quit()
     else:
         return
+
+def check_win2(bo, le):
+    return (bo[7] == le and bo[8] == le and bo[9] == le) or (bo[4] == le and bo[5] == le and bo[6] == le) or(bo[1] == le and bo[2] == le and bo[3] == le) or (bo[7] == le and bo[4] == le and bo[1] == le) or (bo[8] == le and bo[5] == le and bo[2] == le) or(bo[9] == le and bo[6] == le and bo[3] == le) or (bo[7] == le and bo[5] == le and bo[3] == le) or(bo[9] == le and bo[5] == le and bo[1] == le)
 
 def player_move(move):
 
@@ -44,13 +47,43 @@ def pc_move(move):
         pc_move(move)
 
 def ai(move):
-    pass
+    
+    possibleMoves = [x for x, letter in enumerate(board) if letter == ' ' and x != 0] 
+    move = 0
+    for let in ['o','x']:
+        for i in possibleMoves:
+            boardCopy = board[:]
+            boardCopy[i] = let
+            if check_win2(boardCopy, let):
+                move = i
+                board[i] = 'o'
+                return move
 
+    if board[5] == ' ':
+        board[5] = 'o'
+        move = 5
+        return move
+
+    corners = [1, 3, 7, 9]
+    for i in corners:
+        if board[i] == ' ':
+            board[i] = 'o'
+            move = i
+            return move
+
+    edges = [2, 4, 6, 8]
+    for i in edges:
+        if board[i] == ' ':
+            board[i] = 'o'
+            move = i
+            return move
+            
 def main():
 
-    check_win()
+    check_win(board, 'x')
+    check_win(board, 'o')
     full_board()
-    move = int(input("A quina posició tires? 1-9"))
+    move = int(input("A quina posició tires? 1-9   "))
     player_move(move)
     print_board(board)
     print("\n")
@@ -62,7 +95,8 @@ def main():
 
 def main2():
 
-    check_win()
+    check_win(board, 'x')
+    check_win(board, 'o')
     full_board()
     move = int(input("A quina posició tires? 1-9   "))
     player_move(move)
@@ -76,13 +110,11 @@ def main2():
 
 
 def version():
-    version = str(input("Vols jugar a la versió fàcil o a la difícil? (f/d)"))
+    version = str(input("Vols jugar a la versió fàcil o a la difícil? (f/d)   "))
 
     if version.lower() == 'f':
-        print('fàcil')
         main()
     elif version.lower() == 'd':
-        print('dificil')
         main2()
     else:
         print('Invàlid')
