@@ -89,7 +89,7 @@ def main():     # the main function for the easy verson of the game
     check_win(board, 'x')
     check_win(board, 'o')
     full_board()
-    move = int(input("A quina posició tires? 1-9   "))
+    move = int(input("At which position do you move? 1-9   "))
     player_move(move)
     print_board(board)
     print("\n")
@@ -104,7 +104,7 @@ def main2():    # the main function for the hard version of the game
     check_win(board, 'x')
     check_win(board, 'o')
     full_board()
-    move = int(input("A quina posició tires? 1-9   "))
+    move = int(input("At which position do you move? 1-9   "))
     player_move(move)
     print_board(board)
     print("\n")
@@ -116,14 +116,14 @@ def main2():    # the main function for the hard version of the game
 
 
 def version():  # chose a version of the game
-    version = str(input("Vols jugar a la versió fàcil o a la difícil? (f/d)   "))
+    version = str(input("Do you want to play the easy or hard version? (e/h)   "))
 
-    if version.lower() == 'f':
+    if version.lower() == 'e':
         main()
-    elif version.lower() == 'd':
+    elif version.lower() == 'h':
         main2()
     else:
-        print('Invàlid')
+        print('Error')
         version()
 
 version()
