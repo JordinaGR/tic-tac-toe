@@ -18,12 +18,21 @@ def full_board():
         end_game()
 
 def check_win():
-    pass
+    if (board[1] == 'x' and board[2] == 'x' and board[3] == 'x') or (board[4] == 'x' and board[5] == 'x' and board[6] == 'x') or (board[7] == 'x' and board[8] == 'x' and board[9] == 'x') or (board[1] == 'x' and board[4] == 'x' and board[7] == 'x') or (board[2] == 'x' and board[5] == 'x' and board[8] == 'x') or (board[3] == 'x' and board[6] == 'x' and board[9] == 'x') or (board[1] == 'x' and board[5] == 'x' and board[9] == 'x') or (board[3] == 'x' and board[5] == 'x' and board[7] == 'x'):
+        print('You win! congrats')
+        quit()
+        end_game()
+    elif (board[1] == 'o' and board[2] == 'o' and board[3] == 'o') or (board[4] == 'o' and board[5] == 'o' and board[6] == 'o') or (board[7] == 'o' and board[8] == 'o' and board[9] == 'o') or (board[1] == 'o' and board[4] == 'o' and board[7] == 'o') or (board[2] == 'o' and board[5] == 'o' and board[8] == 'o') or (board[3] == 'o' and board[6] == 'o' and board[9] == 'o') or (board[1] == 'o' and board[5] == 'o' and board[9] == 'o') or (board[3] == 'o' and board[5] == 'o' and board[7] == 'o'):
+        print('The computer won')
+        quit()
+        end_game()
+    else:
+        return
 
 def player_move(move):
 
     if board[move] == ' ' and move >= 1 and move <= 9:
-        board[move] = 'X'
+        board[move] = 'x'
         return move
     else:
         print('Invalid move')
@@ -33,11 +42,11 @@ def player_move(move):
 def pc_move(move):
     move = 3
     if board[move] == ' ':
-        board[move] =  'O'
+        board[move] =  'o'
         return move
     else:
         move = 4
-        board[move] = 'O'
+        board[move] = 'o'
         return move
 
 def end_game():
