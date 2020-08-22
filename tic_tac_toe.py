@@ -89,7 +89,18 @@ def main():     # the main function for the easy verson of the game
     check_win(board, 'x')
     check_win(board, 'o')
     full_board()
-    move = int(input("At which position do you move? 1-9   "))
+    try:
+        move = int(input("At which position do you move? 1-9   "))
+    except ValueError:
+        print("Invalid input. Please enter an integer number\n")
+        main()
+    
+    if move >= 1 and move <= 9:
+        pass
+    else:
+        print('Invalid position')
+        main()
+
     player_move(move)
     print_board(board)
     print("\n")
@@ -104,7 +115,17 @@ def main2():    # the main function for the hard version of the game
     check_win(board, 'x')
     check_win(board, 'o')
     full_board()
-    move = int(input("At which position do you move? 1-9   "))
+    try:
+        move = int(input("At which position do you move? 1-9   "))
+    except ValueError:
+        print("Invalid input. Please enter an integer number\n")
+        main2()
+    
+    if move >= 1 and move <= 9:
+        pass
+    else:
+        print('Invalid position')
+        main2()
     player_move(move)
     print_board(board)
     print("\n")
@@ -116,11 +137,15 @@ def main2():    # the main function for the hard version of the game
 
 
 def version():  # chose a version of the game
-    version = str(input("Do you want to play the easy or hard version? (e/h)   "))
+    try: 
+        version1 = str(input("Do you want to play the easy or hard version? (e/h)   "))
+    except ValueError:
+        print("Invalid input, please enter just e or h")
+        version()
 
-    if version.lower() == 'e':
+    if version1.lower() == 'e':
         main()
-    elif version.lower() == 'h':
+    elif version1.lower() == 'h':
         main2()
     else:
         print('Error')
