@@ -45,6 +45,7 @@ def pc_move(move): # this is the computer move, it choses a position ramdomly
         board[move] =  'o'
         return move
     else:
+        full_board()
         pc_move(move)
 
 def ai(move): # this is how the AI chooses its move.
@@ -83,6 +84,7 @@ def ai(move): # this is how the AI chooses its move.
             board[i] = 'o'
             move = i
             return move
+    full_board()
             
 def main():     # the main function for the easy verson of the game
 
